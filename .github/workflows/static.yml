@@ -1,0 +1,74 @@
+# Simple workflow for deploying static content to GitHub Pages and calculating code statistics
+name: Deploy static content to Pages and calculate code statistics
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ["main"]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # Single deploy job since we're just deploying
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Calculate code statistics
+        id: calculate_stats
+        run: |
+          total_lines=$(find . -type f \( -name '*.py' -o -name '*.cpp' -o -name '*.html' -o -name '*.css' \) -exec wc -l {} + | awk '{total += $1} END {print total}')
+          python_lines=$(find . -type f -name '*.py' -exec wc -l {} + | awk '{total += $1} END {print total}')
+          cpp_lines=$(find . -type f -name '*.cpp' -exec wc -l {} + | awk '{total += $1} END {print total}')
+          html_lines=$(find . -type f -name '*.html' -exec wc -l {} + | awk '{total += $1} END {print total}')
+          css_lines=$(find . -type f -name '*.css' -exec wc -l {} + | awk '{total += $1} END {print total}')
+          python_percentage=$(echo "scale=2; ($python_lines / $total_lines) * 100" | bc)
+          cpp_percentage=$(echo "scale=2; ($cpp_lines / $total_lines) * 100" | bc)
+          html_percentage=$(echo "scale=2; ($html_lines / $total_lines) * 100" | bc)
+          css_percentage=$(echo "scale=2; ($css_lines / $total_lines) * 100" | bc)
+          echo "Python code percentage: $python_percentage%"
+          echo "C++ code percentage: $cpp_percentage%"
+          echo "HTML code percentage: $html_percentage%"
+          echo "CSS code percentage: $css_percentage%"
+          echo "python_percentage=$python_percentage" >> $GITHUB_ENV
+          echo "cpp_percentage=$cpp_percentage" >> $GITHUB_ENV
+          echo "html_percentage=$html_percentage" >> $GITHUB_ENV
+          echo "css_percentage=$css_percentage" >> $GITHUB_ENV
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload entire repository
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Display code statistics
+        run: |
+          echo "Python code percentage: ${{ env.python_percentage }}%"
+          echo "C++ code percentage: ${{ env.cpp_percentage }}%"
+          echo "HTML code percentage: ${{ env.html_percentage }}%"
+          echo "CSS code percentage: ${{ env.css_percentage }}%"
