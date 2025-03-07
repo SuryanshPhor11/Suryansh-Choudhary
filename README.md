@@ -44,9 +44,12 @@
   
 <Br>
 
-<p>&nbsp;<img align="center" src="https://github-readme-stats.vercel.app/api?username=SuryanshPhor11&show_icons=true&locale=en&theme=react" alt="SuryanshPhor11" /></p>
 
-<p><img align="center" src="https://github-readme-streak-stats.herokuapp.com/?user=SuryanshPhor11&theme=react" alt="SuryanshPhor11" /></p>
+<p><img align="left" src="https://github-readme-stats.vercel.app/api/top-langs?username=SuryanshPhor11&show_icons=true&locale=en&layout=compact" alt="SuryanshPhor11" /></p>
+
+<p>&nbsp;<img align="center" src="https://github-readme-stats.vercel.app/api?username=SuryanshPhor11&show_icons=true&locale=en" alt="SuryanshPhor11" /></p>
+
+<p><img align="center" src="https://github-readme-streak-stats.herokuapp.com/?user=SuryanshPhor11&" alt="SuryanshPhor11" /></p>
 
 -----
 Credits: [Suryansh Choudhary](https://github.com/SuryanshPhor11)
