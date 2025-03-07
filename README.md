@@ -29,6 +29,7 @@
  <code><img width="15%" src="https://www.vectorlogo.zone/logos/github/github-ar21.svg"></code>
  <code><img width="15%" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/cplusplus/cplusplus-original.svg"></code>
  <code><img width="15%" src="https://www.vectorlogo.zone/logos/mysql/mysql-ar21.svg"></code>
+ <code><img width="15%" src="https://www.vectorlogo.zone/logos/visualstudio_code/visualstudio_code-ar21.svg"></code>
 
 
 <hr>
